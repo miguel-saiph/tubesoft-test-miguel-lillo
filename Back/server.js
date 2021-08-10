@@ -4,11 +4,18 @@ const cors = require("cors");
 const app = express();
 app.use(express.json())
 
+const db = require("./app/models");
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
+
 var corsOptions = {
-  origin: "http://localhost:3001"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
+
+require("./app/routes/record.routes")(app);
 
 // simple route
 app.get("/", (req, res) => {
