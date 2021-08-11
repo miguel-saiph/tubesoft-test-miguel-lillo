@@ -4,17 +4,15 @@ import {
   Switch, Route, Link
 } from "react-router-dom"
 
-import AddRecord from "./components/AddRecord";
-import RecordsList from "./components/RecordsList";
+import Header from "./components/Header";
+import Chronometer from "./components/Chronometer";
 
 const App = () => ( 
   <Router>
-    <Link to={"/add"} className="nav-link">
-      Add
-    </Link>
-    <p>Hello world</p> 
-    <Route exact path={["/", "/records"]} component={RecordsList} />
-    <Route exact path="/add" component={AddRecord} />
+    <Header />
+    <Chronometer />
+    {/* <Route exact path={["/", "/records"]} component={RecordsList} />
+    <Route exact path="/add" component={AddRecord} /> */}
   </Router>
 )
 
