@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import RecordDataService from "../services/RecordService";
 
 export const SaveRecord = (time) => {
@@ -8,11 +7,6 @@ export const SaveRecord = (time) => {
 
   return RecordDataService.create(data)
     .then(response => {
-      // setRecord({
-      //   id: response.data.id,
-      //   time: response.data.time,
-      // });
-      console.log(response.data);
       return response.data
     })
     .catch(e => {
