@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+    backend:
+        container_name: backend
+        build:
+            context: ./Back
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /app/node_modules
+            - ./Back/config:/app/config
+            - ./Back/src:/app/src
+            - ./Back/test:/app/test
+        restart: always
+        ports:
+            - "3001:3001"
+        environment:
+            - PGUSER=postgres
+            - PGPASSWORD=postgre
+            - PGDATABASE=tubesoft-db
+            - PGHOST=postgres # NAME OF THE SERVICE
+        networks:
+            - server-side
+        depends_on:
+            - postgres
+    frontend:
+        container_name: frontend
+        build:
+            context: ./Front
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /app/node_modules
+            - ./Front:/app
+        ports:
+            - "3000:3000"
+        networks:
+            - client-side
+    postgres:
+        image: postgres:12.1
+        container_name: postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: postgre
+            POSTGRES_USER: postgres
+            POSTGRES_DB: tubesoft-db
+        networks:
+            - server-side
+        volumes:
+            - ./postgresql/data:/var/lib/postgresql/data
+
+networks:
+    client-side: {}
+    server-side: {}

@@ -30,7 +30,8 @@ const useStyles = makeStyles({
     padding: '15px'
   },
   button: {
-    margin: '10px'
+    margin: '10px',
+    width: '90px'
   }
 });
 
@@ -49,6 +50,13 @@ const Chronometer = () => {
   // }))
 
   const handleStart = () => {
+    if (isRunning) return;
+    if (isPaused) {
+      // Restart
+      clearInterval(increment.current)
+      setIsPaused(false)
+      setTime(0)
+    }
     setIsRunning(true)
     increment.current = setInterval(() => {
       setTime((time) => time + 1)
@@ -78,11 +86,14 @@ const Chronometer = () => {
       // Updates the record list
       GetRecords().then((results => {
         setRecords(results)
-      }))
-    })
+      })).catch(e => {
+        console.log(e);
+      });
+    }).catch(e => {
+      console.log(e);
+    });
     // Resets time
     setTime(0)
-    clearInterval(increment.current)
     setIsRunning(false)
   }
 
@@ -106,18 +117,24 @@ const Chronometer = () => {
         <p className={classes.time}> {formatTime()} </p>
       </div>
       <div className={classes.center}>
-        <Button variant="contained" color="primary" onClick={handleStart} className={classes.button}> Start </Button>
+        <Button variant="contained" color="primary" onClick={handleStart} className={classes.button}> {isPaused ? 'Restart' : 'Start'} </Button>
         <Button variant="contained" color="primary" onClick={handlePause} className={classes.button}> {isPaused ? 'Resume' : 'Pause'} </Button>
         <Button variant="contained" color="secondary" onClick={handleFinish} className={classes.button} disabled={!isRunning}> Finish </Button>
       </div>
-      <table className={classes.list}>
-        <thead><tr><th>{records.length > 0 ? 'Records' : ''}</th></tr></thead>
-         <tbody> 
-          { records.map((record, index) => 
-          <tr key={index}><td className={classes.td}> {record.time} </td></tr> 
-          )}
-         </tbody>
-      </table>
+      {
+        Array.isArray(records) && records.length > 0 ?
+        <table className={classes.list}>
+          <thead><tr><th>{records.length > 0 ? 'Records' : ''}</th></tr></thead>
+          <tbody> {
+            records.map((record, index) => 
+              <tr key={index}><td className={classes.td}>{record.time}</td></tr> 
+              )
+            }
+          </tbody>
+        </table>
+        : null
+      }
+      
     </div>
     
   )

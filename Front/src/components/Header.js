@@ -20,7 +20,7 @@ const Header = () => {
   const classes = useStyles();
   return (
     <div className={classes.header}>
-      <h1>Chronometer</h1>
+      <h1>Timer</h1>
     </div>
   )
 }
