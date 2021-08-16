@@ -1,7 +1,7 @@
 # Simple Timer
  React app showing a timer
 
- ![Alt text](screenshot.png?raw=true "Img")
+ ![img](https://github.com/miguel-saiph/tubesoft-test-miguel-lillo/blob/main/screenshot.PNG?raw=true "Img")
  
  The timer can be paused/resumed. 
  
