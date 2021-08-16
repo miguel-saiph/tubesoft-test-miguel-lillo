@@ -5,7 +5,7 @@
  
  The timer can be paused/resumed. 
  
- When the finish button is pressed, it will store the time in a database and show the previous records.
+ When the finish button is clicked, it will store the time in a database and show the previous records.
 
 ## Technologies
 - NodeJS
