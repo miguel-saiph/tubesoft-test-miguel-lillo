@@ -8,7 +8,9 @@ const create = data => {
   return http.post("/records", data);
 };
 
-export default {
+const RecordService = {
   getAll,
   create,
 };
+
+export default RecordService
